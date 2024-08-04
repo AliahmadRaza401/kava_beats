@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kava_beats_app/Constants/book2.dart';
 import 'package:kava_beats_app/Screens/Book1/book1.dart';
 import 'package:kava_beats_app/Screens/Book2/book_detail_screen.dart';
 
@@ -28,6 +29,19 @@ class _Book2ScreenState extends State<Book2Screen> {
   void initState() {
     super.initState();
     fetchBooks();
+    // uploadBook();
+  }
+
+  uploadBook() async {
+    for (var e in book2) {
+      FirebaseFirestore.instance.collection('book2').doc().set({
+        "title": "${e['title']}",
+        "content": "${e['description']}",
+      });
+      await Future.delayed(Duration(milliseconds: 100));
+      print("IUploading done");
+    }
+    print("IUploading Close");
   }
 
   List<Book> fetchedBooks = [];

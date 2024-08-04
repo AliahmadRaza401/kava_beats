@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kava_beats_app/Screens/Book1/book1_detail_screen.dart';
 
+import '../../Constants/book1.dart';
+
 class Book1Screen extends StatefulWidget {
   const Book1Screen({super.key});
 
@@ -28,7 +30,19 @@ class _Book1ScreenState extends State<Book1Screen> {
     super.initState();
     // searchList = List.from(books);
     // searchList.addAll(books);
+    // uploadBook();
     fetchBooks();
+  }
+
+  uploadBook() async {
+    for (var e in book1) {
+      FirebaseFirestore.instance.collection('book1').doc().set({
+        "title": "${e['title']}",
+        "content": "${e['description']}",
+      });
+      await Future.delayed(Duration(milliseconds: 100));
+      print("IUploading Book1 done");
+    }
   }
 
   List<Book1> fetchedBooks = [];
